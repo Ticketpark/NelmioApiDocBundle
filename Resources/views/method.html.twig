@@ -64,8 +64,8 @@
                             <tr>
                                 <td>{{ name }}</td>
                                 <td>{{ infos.requirement }}</td>
-                                <td>{{ infos.dataType }}</td>
-                                <td>{{ infos.description }}</td>
+                                <td>{{ infos.dataType is defined ? infos.dataType : '' }}</td>
+                                <td>{{ infos.description is defined ? infos.description : ''  }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -117,9 +117,9 @@
                             {% if not infos.readonly %}
                                 <tr>
                                     <td>{{ name }}</td>
-                                    <td>{{ infos.dataType }}</td>
+                                    <td>{{ infos.dataType is defined ? infos.dataType : '' }}</td>
                                     <td>{{ infos.required ? 'true' : 'false' }}</td>
-                                    <td>{{ infos.description }}</td>
+                                    <td>{{ infos.description is defined ? infos.description : '' }}</td>
                                 </tr>
                             {% endif %}
                         {% endfor %}
