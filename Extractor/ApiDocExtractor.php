@@ -324,6 +324,12 @@ class ApiDocExtractor
                     }
                     $annotation->setParameters($parameters);
                 }
+                if ('POST' == $value || 'PATCH' == $value) {
+                    // Don't show pid on POST and PATCH
+                    $parameters = $annotation->getParameters();
+                    unset($parameters['pid']);
+                    $annotation->setParameters($parameters);
+                }
             }
             if ('_scheme' == $name) {
                 $https = ('https' == $value);
