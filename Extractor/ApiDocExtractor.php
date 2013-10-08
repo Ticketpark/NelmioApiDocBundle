@@ -324,12 +324,6 @@ class ApiDocExtractor
                     }
                     $annotation->setParameters($parameters);
                 }
-                if ('POST' == $value || 'PATCH' == $value) {
-                    // Don't show pid on POST and PATCH
-                    $parameters = $annotation->getParameters();
-                    unset($parameters['pid']);
-                    $annotation->setParameters($parameters);
-                }
             }
             if ('_scheme' == $name) {
                 $https = ('https' == $value);
@@ -373,6 +367,14 @@ class ApiDocExtractor
         }
 
         $annotation->setRequirements($requirements);
+
+        //remove hidden parameters
+        $hiddenParameters = $annotation->getHiddenParameters();
+        $parameters = $annotation->getParameters();
+        foreach($hiddenParameters as $hiddenParameter){
+            unset($parameters[$hiddenParameter]);
+        }
+        $annotation->setParameters($parameters);
 
         return $annotation;
     }

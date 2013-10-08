@@ -40,6 +40,14 @@ class ApiDoc
     private $parameters = array();
 
     /**
+     * Parameters which are hidden from the docs
+     *
+     * @var array
+     */
+    private $hiddenParameters = array();
+
+
+    /**
      * @var string
      */
     private $input = null;
@@ -184,6 +192,10 @@ class ApiDoc
 
                 $this->addParameter($name, $parameter);
             }
+        }
+
+        if (isset($data['hideParameters'])) {
+            $this->setHiddenParameters($data['hideParameters']);
         }
 
         if (isset($data['output'])) {
@@ -351,6 +363,22 @@ class ApiDoc
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     */
+    public function setHiddenParameters(array $hiddenParameters)
+    {
+        $this->hiddenParameters = $hiddenParameters;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHiddenParameters()
+    {
+        return $this->hiddenParameters;
     }
 
     /**
