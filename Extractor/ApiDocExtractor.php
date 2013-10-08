@@ -136,7 +136,7 @@ class ApiDocExtractor
             }
         }
 
-        $methodOrder = array('GET', 'POST', 'PUT', 'DELETE');
+        $methodOrder = array('GET', 'POST', 'PUT', 'PATCH', 'DELETE');
         usort($array, function($a, $b) use ($methodOrder) {
             if ($a['resource'] === $b['resource']) {
                 if ($a['annotation']->getRoute()->getPattern() === $b['annotation']->getRoute()->getPattern()) {
