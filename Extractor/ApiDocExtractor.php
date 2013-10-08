@@ -287,13 +287,6 @@ class ApiDocExtractor
 
             $parameters = $this->clearClasses($parameters);
 
-            if ('PUT' === $method) {
-                // All parameters are optional with PUT (update)
-                array_walk($parameters, function($val, $key) use (&$data) {
-                    $parameters[$key]['required'] = false;
-                });
-            }
-
             $annotation->setParameters($parameters);
         }
 
@@ -322,6 +315,15 @@ class ApiDocExtractor
                     'dataType'      => '',
                     'description'   => '',
                 );
+            } else {
+                if ('PATCH' == $value) {
+                    // All parameters are optional with PATCH (update)
+                    $parameters = $annotation->getParameters();
+                    foreach($parameters as $key => $value){
+                        $parameters[$key]['required'] = false;
+                    }
+                    $annotation->setParameters($parameters);
+                }
             }
             if ('_scheme' == $name) {
                 $https = ('https' == $value);

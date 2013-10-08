@@ -346,6 +346,14 @@ class ApiDoc
     }
 
     /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
      * Sets the responsed data as processed by the parsers - same format as parameters
      *
      * @param array $response
