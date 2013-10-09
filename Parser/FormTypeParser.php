@@ -37,11 +37,12 @@ class FormTypeParser implements ParserInterface
         'date'      => 'date',
         'datetime'  => 'datetime',
         'checkbox'  => 'boolean',
+        'collection'=> 'array',
         'time'      => 'time',
         'number'    => 'float',
         'integer'   => 'int',
         'textarea'  => 'string',
-        'country'   => 'string',
+        'country'   => 'string'
     );
 
     public function __construct(FormFactoryInterface $formFactory)

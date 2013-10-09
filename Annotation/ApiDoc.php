@@ -40,6 +40,13 @@ class ApiDoc
     private $parameters = array();
 
     /**
+     * Returns are data a client will get to see.
+     *
+     * @var array
+     */
+    private $returns = array();
+
+    /**
      * Parameters which are hidden from the docs
      *
      * @var array
@@ -191,6 +198,35 @@ class ApiDoc
                 unset($parameter['name']);
 
                 $this->addParameter($name, $parameter);
+            }
+        }
+
+        if (isset($data['returns'])) {
+            foreach ($data['returns'] as $parameter) {
+                if (!isset($parameter['name'])) {
+                    throw new \InvalidArgumentException('A "return" element has to contain a "name" attribute');
+                }
+
+                if (!isset($parameter['dataType'])) {
+                    throw new \InvalidArgumentException(sprintf(
+                        '"%s" return element has to contain a "dataType" attribute',
+                        $parameter['name']
+                    ));
+                }
+
+                $standard = array();
+                $standard['readonly'] = false;
+                $standard['required'] = false;
+                $standard['description'] = false;
+                $standard['sinceVersion'] = null;
+                $standard['untilVersion'] = null;
+
+                $parameter = array_merge($standard, $parameter);
+
+                $name = $parameter['name'];
+                unset($parameter['name']);
+
+                $this->addReturn($name, $parameter);
             }
         }
 
@@ -363,6 +399,31 @@ class ApiDoc
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * @param string $name
+     * @param array  $return
+     */
+    public function addReturn($name, array $return)
+    {
+        $this->returns[$name] = $return;
+    }
+
+    /**
+     * @param array $returns
+     */
+    public function setReturns(array $returns)
+    {
+        $this->returns = $returns;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReturns()
+    {
+        return $this->returns;
     }
 
     /**

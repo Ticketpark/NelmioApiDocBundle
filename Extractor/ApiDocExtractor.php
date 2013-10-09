@@ -302,8 +302,10 @@ class ApiDocExtractor
                 }
             }
             $response = $this->clearClasses($response);
-
+#var_dump($response); exit;
             $annotation->setResponse($response);
+        } else {
+            $annotation->setResponse($annotation->getReturns());
         }
 
         // requirements
